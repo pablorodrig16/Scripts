@@ -1,0 +1,43 @@
+---
+title: "Análisis univariado"
+author: "Pablo O Rodriguez"
+date: '`r date()`'
+output: html_document
+---
+
+```{r, echo=FALSE}
+source('~/R/Scripts/Tablas y analisis univariados.R', echo=FALSE )
+
+datos.crudos<-read.table(file.choose(), header=T)
+
+####asignación de datos a analizar con datos válidos de CRITotal#######
+datos<-datos.crudos[!is.na (datos.crudos$CRITotal),9:104]
+
+
+diagnosticogrupo<-character()
+
+for (i in 1:length (datos[,95])){
+  if (datos[,95][i]=="Sindeterioro"){
+    diagnosticogrupo[i]<-1
+  }
+
+  else if (datos[,95][i]=="DCLA"||datos[,95][i]=="DCLMD"){
+    diagnosticogrupo[i]<-2
+  }
+  else
+    diagnosticogrupo[i]<-3
+}
+
+diagnosticogrupo<-as.factor (diagnosticogrupo)
+
+levels(diagnosticogrupo)<-c("Sin deterioro","DCL","Demencia")
+
+###aplica funcion creaTabla####
+tabla<-creaTabla (datos, diagnosticogrupo)
+
+library (knitr)
+```
+
+```{r, echo=FALSE,results='asis'}
+knit_print (kable(tabla))
+```
