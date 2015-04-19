@@ -199,6 +199,6 @@ colnames (tabla)[i+2]<-"Distribucion"
 colnames (tabla)[i+3]<-"Datos faltantes"
 colnames (tabla)[i+4]<-"P"
 
-####Imprime y copia al clipboard la tabla######
+####Devuelve la tabla como resultado de la funcion
 tabla
 }
